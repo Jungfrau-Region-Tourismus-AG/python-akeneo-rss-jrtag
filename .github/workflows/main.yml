@@ -1,0 +1,72 @@
+name: Run Script Prod
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "* 19 * * *" # every day at 19:00 UTC
+
+env:
+  AKENEO_HOST: ${{ secrets.AKENEO_HOST }}
+  AKENEO_CLIENT_ID: ${{ secrets.AKENEO_CLIENT_ID }}
+  AKENEO_CLIENT_SECRET: ${{ secrets.AKENEO_CLIENT_SECRET }}
+  AKENEO_USERNAME: ${{ secrets.AKENEO_USERNAME }}
+  AKENEO_PASSWORD: ${{ secrets.AKENEO_PASSWORD }}
+  AKENEO_SEARCH_QUERY_ENABLED: ${{ secrets.AKENEO_SEARCH_QUERY_ENABLED }}
+  AKENEO_SEARCH_QUERY_COMPLETENESS: ${{ secrets.AKENEO_SEARCH_QUERY_COMPLETENESS }}
+  AKENEO_SEARCH_QUERY_SCOPE: ${{ secrets.AKENEO_SEARCH_QUERY_SCOPE }}
+  S3_ENDPOINT: ${{ secrets.S3_ENDPOINT }}
+  S3_BUCKET: ${{ secrets.S3_BUCKET }}
+  S3_REGION: ${{ secrets.S3_REGION }}
+  S3_ACCESS_KEY: ${{ secrets.S3_ACCESS_KEY }}
+  S3_SECRET_ACCESS_KEY: ${{ secrets.S3_SECRET_ACCESS_KEY }}
+  S3_CDN_URL: ${{ secrets.S3_CDN_URL }}
+  S3_OBJECT_EXPORT_URL: ${{ secrets.S3_OBJECT_EXPORT_URL }}
+  S3_OBJECT_EXPORT_INDEX: ${{ secrets.S3_OBJECT_EXPORT_INDEX }}
+  S3_OBJECT_EXPORT_CATEGORIES_PATH: ${{ secrets.S3_OBJECT_EXPORT_CATEGORIES_PATH }}
+  S3_OBJECT_EXPORT_INDEX_NAME: ${{ secrets.S3_OBJECT_EXPORT_INDEX_NAME }}
+  RSS_TITEL: ${{ secrets.RSS_TITEL }}
+  RSS_LANGUAGE: ${{ secrets.RSS_LANGUAGE }}
+  RSS_DESCRIPTION: ${{ secrets.RSS_DESCRIPTION }}
+  RSS_GENERATOR: ${{ secrets.RSS_GENERATOR }}
+
+jobs:
+  build:
+    environment: prod
+    name: RUN SCRIPT PROD
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - name: Create Virtual Environment
+        run: |
+          echo "${{ secrets.AKENEO_HOST }}" > .env
+          echo "${{ secrets.AKENEO_CLIENT_ID }}" > .env
+          echo "${{ secrets.AKENEO_CLIENT_SECRET }}" > .env
+          echo "${{ secrets.AKENEO_USERNAME }}" > .env
+          echo "${{ secrets.AKENEO_PASSWORD }}" > .env
+          echo "${{ secrets.AKENEO_SEARCH_QUERY_ENABLED }}" > .env
+          echo "${{ secrets.AKENEO_SEARCH_QUERY_COMPLETENESS }}" > .env
+          echo "${{ secrets.AKENEO_SEARCH_QUERY_SCOPE }}" > .env
+          echo "${{ secrets.S3_ENDPOINT }}" > .env
+          echo "${{ secrets.S3_BUCKET }}" > .env
+          echo "${{ secrets.S3_REGION }}" > .env
+          echo "${{ secrets.S3_ACCESS_KEY }}" > .env
+          echo "${{ secrets.S3_SECRET_ACCESS_KEY }}" > .env
+          echo "${{ secrets.S3_CDN_URL }}" > .env
+          echo "${{ secrets.S3_OBJECT_EXPORT_URL }}" > .env
+          echo "${{ secrets.S3_OBJECT_EXPORT_INDEX }}" > .env
+          echo "${{ secrets.S3_OBJECT_EXPORT_CATEGORIES_PATH }}" > .env
+          echo "${{ secrets.S3_OBJECT_EXPORT_INDEX_NAME }}" > .env
+          echo "${{ secrets.RSS_TITEL }}" > .env
+          echo "${{ secrets.RSS_LANGUAGE }}" > .env
+          echo "${{ secrets.RSS_DESCRIPTION }}" > .env
+          echo "${{ secrets.RSS_GENERATOR }}" > .env
+      - name: Install python-dotenv
+        run: pip install python-dotenv
+      - name: Install akeneo
+        run: pip install -i https://test.pypi.org/simple/ akeneo
+      - name: Run Script
+        working-directory: ./src
+        run: python start.py
