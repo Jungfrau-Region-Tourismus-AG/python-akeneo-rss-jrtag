@@ -9,15 +9,20 @@ S3_OBJECT_EXPORT_INDEX = getenv('S3_OBJECT_EXPORT_INDEX')
 S3_OBJECT_EXPORT_URL = getenv('S3_OBJECT_EXPORT_URL')
 S3_OBJECT_EXPORT_INDEX_NAME = getenv('S3_OBJECT_EXPORT_INDEX_NAME')
 
+RSS_TITEL = getenv('RSS_TITEL')
+RSS_LANGUAGE = getenv('RSS_LANGUAGE')
+RSS_LANGUAGE = getenv('RSS_LANGUAGE')
+RSS_DESCRIPTION = getenv('RSS_DESCRIPTION')
+RSS_GENERATOR = getenv('RSS_GENERATOR')
+
 def GenerateXML(filename, data):
     rss = ET.Element("rss", version="2.0")
     channel = ET.SubElement(rss, "channel")
-    ET.SubElement(channel, "title").text = "Jungfrau Region Tourismus AG - Alle Daten"
+    ET.SubElement(channel, "title").text = RSS_TITEL
     ET.SubElement(channel, "link").text = S3_OBJECT_EXPORT_URL+ S3_OBJECT_EXPORT_INDEX
-    ET.SubElement(channel, "language").text = "de-ch"
-    ET.SubElement(channel, "docs").text = "opendata.jungfrauregion.swiss/api"
-    ET.SubElement(channel, "description").text = "Alle Daten der Jungfrau Region Tourismus AG von jrtag.pim.tso.ch als RSS"
-    ET.SubElement(channel, "generator").text = "Contentdesk.io"
+    ET.SubElement(channel, "language").text = RSS_LANGUAGE
+    ET.SubElement(channel, "description").text = RSS_DESCRIPTION
+    ET.SubElement(channel, "generator").text = RSS_GENERATOR
 
     for product in data:
         item = ET.SubElement(channel, "item")
