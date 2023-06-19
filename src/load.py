@@ -1,10 +1,6 @@
-import binascii
-import xml.etree.ElementTree as ET
 from os import getenv
 from dotenv import find_dotenv, load_dotenv
 import boto3
-import xmltodict
-import json
 from xml.dom.minidom import parse, parseString
 
 load_dotenv(find_dotenv())
