@@ -28,5 +28,5 @@ def uploadFile(filename, bucket, objectname):
     s3.upload_file(filename, bucket, objectname, ExtraArgs={'ACL': 'public-read', 'ContentType': 'text/xml'})
     
 def load(data):
-    uploadFile(r'output/'+S3_OBJECT_EXPORT_INDEX_NAME, S3_BUCKET, S3_OBJECT_EXPORT_INDEX)
+    uploadFile(S3_OBJECT_EXPORT_INDEX_NAME, S3_BUCKET, S3_OBJECT_EXPORT_INDEX)
     return data

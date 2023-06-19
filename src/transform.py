@@ -50,5 +50,5 @@ def GenerateXML(filename, data):
 
 
 def transform(data):
-    rssdata = GenerateXML(r'output/'+S3_OBJECT_EXPORT_INDEX_NAME, data)
+    rssdata = GenerateXML(S3_OBJECT_EXPORT_INDEX_NAME, data)
     return rssdata
