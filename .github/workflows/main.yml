@@ -65,6 +65,10 @@ jobs:
           echo "${{ secrets.RSS_GENERATOR }}" > .env
       - name: Install python-dotenv
         run: pip install python-dotenv
+      - name: Install requests
+        run: pip install requests
+      - name: Install boto3
+        run: pip install boto3
       - name: Install akeneo
         run: pip install -i https://test.pypi.org/simple/ akeneo
       - name: Run Script
