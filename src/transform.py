@@ -4,12 +4,14 @@ from dotenv import find_dotenv, load_dotenv
 load_dotenv(find_dotenv())
 
 S3_CDN_URL = getenv('S3_CDN_URL')
+S3_OBJECT_EXPORT_INDEX = getenv('S3_OBJECT_EXPORT_INDEX')
+S3_OBJECT_EXPORT_URL = getenv('S3_OBJECT_EXPORT_URL')
 
 def GenerateXML(filename, data):
     rss = ET.Element("rss", version="2.0")
     channel = ET.SubElement(rss, "channel")
     ET.SubElement(channel, "title").text = "Jungfrau Region Tourismus AG - Alle Daten"
-    ET.SubElement(channel, "link").text = "opendata.jungfrauregion.swiss/api/catgory/products.rss"
+    ET.SubElement(channel, "link").text = S3_OBJECT_EXPORT_URL+ S3_OBJECT_EXPORT_INDEX
     ET.SubElement(channel, "language").text = "de-ch"
     ET.SubElement(channel, "docs").text = "opendata.jungfrauregion.swiss/api"
     ET.SubElement(channel, "description").text = "Alle Daten der Jungfrau Region Tourismus AG von jrtag.pim.tso.ch als RSS"
@@ -30,9 +32,9 @@ def GenerateXML(filename, data):
             dict = {'url': urlAttribute, 'length': lengthAttribute, 'type': typeAttribute}
             new = ET.Element("enclosure", dict)
         item.append(new)
-        ET.SubElement(item, "category").text = "Experience"
-        ET.SubElement(item, "category").text = "Grindelwald"
-        ET.SubElement(item, "pubDate").text = "Sun, 06 Sep 2009 16:20:00 +0000"
+        for category in product['categories']:
+            ET.SubElement(item, "category").text = category
+        ET.SubElement(item, "pubDate").text = product['updated']
         ET.SubElement(item, "guid").text = product['identifier']
 
     tree = ET.ElementTree(rss)
