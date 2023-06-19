@@ -67,10 +67,16 @@ jobs:
         run: pip install python-dotenv
       - name: Install requests
         run: pip install requests
-      - name: Install boto3
-        run: pip install boto3
+      - name: Install oauthlib
+        run: pip install oauthlib
+      - name: Install requests_oauthlib
+        run: pip install requests_oauthlib
+      - name: Install validators
+        run: pip install validators
       - name: Install akeneo
         run: pip install -i https://test.pypi.org/simple/ akeneo
+      - name: Install boto3
+        run: pip install boto3
       - name: Run Script
         working-directory: ./src
         run: python start.py
