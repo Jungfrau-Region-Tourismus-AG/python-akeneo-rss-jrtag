@@ -1,6 +1,6 @@
 from extract import extract
 from transform import transform
-#from load import load
+from load import load
 
 def __main__():
   print("STARTING")
@@ -17,7 +17,8 @@ def __main__():
 
   ## LOADING
   print("LOADING")
-  #loadData = load(transformData)
+  loadData = load(transformData)
+  print(loadData)
 
   print("FINISHED")
 

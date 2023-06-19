@@ -1,11 +1,13 @@
 import xml.etree.ElementTree as ET
 from os import getenv
 from dotenv import find_dotenv, load_dotenv
+from xml.dom import minidom
 load_dotenv(find_dotenv())
 
 S3_CDN_URL = getenv('S3_CDN_URL')
 S3_OBJECT_EXPORT_INDEX = getenv('S3_OBJECT_EXPORT_INDEX')
 S3_OBJECT_EXPORT_URL = getenv('S3_OBJECT_EXPORT_URL')
+S3_OBJECT_EXPORT_INDEX_NAME = getenv('S3_OBJECT_EXPORT_INDEX_NAME')
 
 def GenerateXML(filename, data):
     rss = ET.Element("rss", version="2.0")
@@ -43,5 +45,5 @@ def GenerateXML(filename, data):
 
 
 def transform(data):
-    rssdata = GenerateXML('all.rss', data)
+    rssdata = GenerateXML(r'output/'+S3_OBJECT_EXPORT_INDEX_NAME, data)
     return rssdata
