@@ -1,5 +1,4 @@
-.env
-.env.prod
+*.env
 src/__pycache__/*
 *__pycache__/*
 *.xml
