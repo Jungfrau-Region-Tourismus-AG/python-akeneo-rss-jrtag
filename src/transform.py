@@ -13,6 +13,12 @@ def GenerateXML(filename, data):
     ET.SubElement(item, "title").text = "Example entry"
     ET.SubElement(item, "link").text = "http://example.com/blog/post/1"
     ET.SubElement(item, "description").text = "Here is some text containing an interesting description."
+    urlAttribute = "https://jrtagpimtsoch.sos-ch-dk-2.exoscale-cdn.com/catalog/3/2/3/8/32380c71b0fea38b4c69fefce054d0f322c9c501_wellness_hotel_glacier__1_.jpg"
+    lengthAttribute = "12345"
+    typeAttribute = "image/jpeg"
+    dict = {'url': urlAttribute, 'length': lengthAttribute, 'type': typeAttribute}
+    new = ET.Element("enclosure", dict)
+    item.append(new)
     #ET.SubElement(item, "enclosure").url = "https://jrtagpimtsoch.sos-ch-dk-2.exoscale-cdn.com/catalog/3/2/3/8/32380c71b0fea38b4c69fefce054d0f322c9c501_wellness_hotel_glacier__1_.jpg"
     #ET.SubElement(item, "enclosure").length = ""
     #ET.SubElement(item, "enclosure").type = "image/jpeg"
