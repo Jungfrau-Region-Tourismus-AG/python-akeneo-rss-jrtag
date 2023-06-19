@@ -26,20 +26,10 @@ def s3client():
         endpoint_url='https://sos-'+S3_REGION+'.'+S3_ENDPOINT,
     )
     return s3_client
-
-def putData(data, bucket, filename):
-    s3 = s3client()
-    print (ET.tostring(data))
-    s3.put_object(
-        Bucket=bucket, 
-        Key=filename, 
-        Body=ET.tostring(data), 
-        ACL='public-read',
-        ContentType='application/rss+xml')
     
 def uploadFile(filename, bucket, objectname):
     s3 = s3client()
-    s3.upload_file(filename, bucket, objectname, ExtraArgs={'ACL': 'public-read', 'ContentType': 'application/rss+xml'})
+    s3.upload_file(filename, bucket, objectname, ExtraArgs={'ACL': 'public-read', 'ContentType': 'text/xml'})
     
 def load(data):
     uploadFile(r'output/'+S3_OBJECT_EXPORT_INDEX_NAME, S3_BUCKET, S3_OBJECT_EXPORT_INDEX)
